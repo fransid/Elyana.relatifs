@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nombres relatifs — Exercice interactif 5ᵉ | Sid KHALIFA</title>
+<meta name="author" content="Sid KHALIFA">
+<meta name="description" content="Exercice interactif de 20 questions sur les nombres relatifs : comparaison, repérage, addition et soustraction. Classe de cinquième. Exercice de Sid KHALIFA.">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand:#4f46e5;
+    --brand2:#7c3aed;
+    --neg:#e11d48;
+    --pos:#059669;
+  }
+  body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;}
+  h1,h2,h3,.display{font-family:'Baloo 2','Inter',system-ui,sans-serif;}
+  .num{font-variant-numeric:tabular-nums;}
+  .fade-in{animation:fadeIn .45s ease both;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .pop{animation:pop .35s cubic-bezier(.2,1.5,.4,1) both;}
+  @keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+  .shake{animation:shake .4s ease;}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+  .chip{transition:all .18s ease;}
+  .chip:hover{transform:translateY(-2px);}
+  .chip.selected{outline:3px solid var(--brand); outline-offset:2px;}
+  .confetti{position:fixed;top:-20px;width:10px;height:16px;z-index:80;pointer-events:none;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.15}}
+  .grad-text{background:linear-gradient(90deg,#c7d2fe,#fff 40%,#e9d5ff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .blurred-blob{position:absolute;filter:blur(70px);opacity:.55;border-radius:9999px;pointer-events:none;}
+  input[type=text]{font-family:'Baloo 2',sans-serif;}
+  .scroll-thin::-webkit-scrollbar{width:8px}
+  .scroll-thin::-webkit-scrollbar-thumb{background:#c7d2fe;border-radius:8px}
+  @media print{
+    .no-print{display:none !important;}
+    #printArea{display:block !important;}
+    body{background:#fff !important;}
+    @page{margin:14mm;}
+  }
+  #printArea{display:none;}
+</style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen">
+
+<!-- ================= EN-TÊTE ================= -->
+<header class="relative overflow-hidden bg-gradient-to-br from-indigo-950 via-violet-900 to-fuchsia-900 text-white">
+  <div class="blurred-blob w-72 h-72 bg-indigo-500 -top-20 -left-10"></div>
+  <div class="blurred-blob w-72 h-72 bg-fuchsia-500 -bottom-24 right-0"></div>
+  <div class="relative max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    <div class="flex flex-wrap items-center gap-3 justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center border border-white/20 shadow-lg">
+          <span class="display text-2xl sm:text-3xl font-extrabold">±</span>
+        </div>
+        <div>
+          <p class="text-[11px] sm:text-xs uppercase tracking-[0.25em] text-indigo-200/90">Mathématiques · Classe de cinquième</p>
+          <h1 class="display text-2xl sm:text-3xl font-extrabold leading-tight grad-text">Nombres relatifs : comparaison &amp; calculs</h1>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] sm:text-xs px-3 py-1.5 rounded-full bg-emerald-400/15 border border-emerald-300/40 text-emerald-100 font-semibold">Exercice interactif · 20 questions</span>
+        <span class="text-[10px] sm:text-xs px-3 py-1.5 rounded-full bg-amber-300/15 border border-amber-200/40 text-amber-100 font-semibold">Par Sid KHALIFA</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="no-print max-w-5xl mx-auto px-4 sm:px-6 -mt-6 sm:-mt-8 pb-16">
+
+  <!-- ================= ÉCRAN D'ACCUEIL ================= -->
+  <section id="screen-intro" class="bg-white rounded-3xl shadow-xl ring-1 ring-slate-900/5 p-6 sm:p-10 fade-in">
+    <div class="flex items-start gap-3 mb-5">
+      <div class="mt-1 w-9 h-9 shrink-0 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold display">i</div>
+      <div>
+        <h2 class="display text-2xl font-extrabold text-slate-900">Bienvenue dans ton exercice !</h2>
+        <p class="text-slate-600 mt-1">20 questions sur les <strong>nombres relatifs</strong> : droite graduée, distance à zéro, opposés, comparaison, addition et soustraction.</p>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-3 my-6">
+      <div class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+        <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold">Ce que tu travailles</p>
+        <ul class="mt-2 text-sm text-slate-700 space-y-1 list-disc list-inside">
+          <li>Repérage &amp; droite graduée</li>
+          <li>Comparaison de relatifs</li>
+          <li>Sommes et différences</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+        <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold">Comment ça marche</p>
+        <ul class="mt-2 text-sm text-slate-700 space-y-1 list-disc list-inside">
+          <li>1 question à la fois</li>
+          <li>Correction expliquée</li>
+          <li>Score final sur 20</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+        <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold">Objectif</p>
+        <ul class="mt-2 text-sm text-slate-700 space-y-1 list-disc list-inside">
+          <li>16/20 = très bien</li>
+          <li>18/20 = excellent</li>
+          <li>20/20 = parfait !</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rounded-2xl bg-amber-50 border border-amber-200 p-4 text-sm text-amber-900">
+      <strong>Méthode utile :</strong> pour additionner deux nombres de <em>signes différents</em>, on garde le signe du nombre qui a la <strong>plus grande distance à zéro</strong> et on soustrait les distances à zéro. Pour <em>signes identiques</em>, on garde le signe et on additionne les distances à zéro.
+    </div>
+
+    <div class="mt-7 flex flex-wrap gap-3">
+      <button id="btn-start" class="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold shadow-lg shadow-indigo-600/25 hover:shadow-xl hover:-translate-y-0.5 transition-all active:translate-y-0">▶ Commencer l'exercice</button>
+      <button id="btn-download-intro" class="px-5 py-3.5 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition-all">⬇ Télécharger le code HTML</button>
+      <button id="btn-fiche-intro" class="px-5 py-3.5 rounded-2xl bg-white text-slate-700 font-semibold border border-slate-300 hover:border-slate-400 transition-all">🖨 Fiche + corrigé (.html)</button>
+    </div>
+    <p class="mt-4 text-xs text-slate-500">Fichier HTML autonome, utilisable hors ligne sur ordinateur, tablette ou vidéoprojecteur — aucune installation nécessaire. Conçu par <strong>Sid KHALIFA</strong>.</p>
+  </section>
+
+  <!-- ================= ÉCRAN QUIZ ================= -->
+  <section id="screen-quiz" class="hidden">
+    <!-- barre de progression -->
+    <div class="bg-white rounded-3xl shadow-xl ring-1 ring-slate-900/5 p-5 sm:p-7 fade-in">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-100" id="tag-chip">Repérage</span>
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600">Question <span id="q-current" class="num">1</span> / 20</span>
+        </div>
+        <div class="flex items-center gap-3 text-sm">
+          <span class="text-slate-500">Score : <strong id="score-live" class="num text-slate-900">0</strong>/20</span>
+          <span id="streak-box" class="hidden text-amber-600 font-semibold"></span>
+        </div>
+      </div>
+      <div class="h-2.5 rounded-full bg-slate-200 overflow-hidden">
+        <div id="progress-bar" class="h-full w-0 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 transition-all duration-500"></div>
+      </div>
+      <div id="dots" class="flex flex-wrap gap-1.5 mt-3"></div>
+    </div>
+
+    <!-- carte question -->
+    <div id="q-card" class="mt-4 bg-white rounded-3xl shadow-xl ring-1 ring-slate-900/5 p-6 sm:p-9"></div>
+  </section>
+
+  <!-- ================= ÉCRAN RÉSULTAT ================= -->
+  <section id="screen-result" class="hidden"></section>
+</main>
+
+<!-- zone impression -->
+<div id="printArea"></div>
+
+<footer class="no-print bg-slate-900 text-slate-300 mt-10">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 text-sm">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <p class="display text-lg font-bold text-white">Exercice de Sid KHALIFA</p>
+        <p class="text-slate-400">Nombres relatifs — comparaison, repérage et calculs · Niveau 5ᵉ (cycle 4)</p>
+      </div>
+      <div class="flex gap-2">
+        <button id="btn-download-footer" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition">⬇ Télécharger le .html</button>
+        <button id="btn-restart-footer" class="px-4 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-semibold transition">↻ Recommencer</button>
+      </div>
+    </div>
+    <p class="mt-6 text-xs text-slate-500">© Sid KHALIFA — Tous droits réservés. Support destiné à un usage pédagogique en classe.</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   EXERCICE INTERACTIF — NOMBRES RELATIFS (5ᵉ)
+   © Sid KHALIFA
+   ============================================================ */
+
+/* Capture du code source de la page AVANT toute modification du DOM,
+   pour permettre le téléchargement d'un fichier HTML identique. */
+const PAGE_SOURCE = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+
+/* ---------- 1. BANQUE DE QUESTIONS ---------- */
+const QUESTIONS = [
+  {tag:"Écriture", type:"qcm",
+   q:"Parmi ces quatre nombres, lequel est un nombre relatif <strong>négatif</strong> ?",
+   options:["+8","8","−8","0"], answer:2,
+   explain:"−8 est écrit avec le signe « − » : c'est donc un nombre relatif négatif. Les nombres +8 et 8 sont positifs, et 0 n'est <strong>ni positif ni négatif</strong>."},
+
+  {tag:"Opposés", type:"input",
+   q:"Quelle est l'écriture simplifiée de l'<strong>opposé</strong> de (+12) ?",
+   answer:-12, unit:"",
+   explain:"L'opposé de (+12) est (−12), qui s'écrit simplement <strong>−12</strong>. Deux nombres opposés ont la <strong>même distance à zéro</strong> (12) mais des signes contraires."},
+
+  {tag:"Distance à zéro", type:"input",
+   q:"Quelle est la <strong>distance à zéro</strong> du nombre −5 ?",
+   answer:5, unit:"",
+   explain:"La distance à zéro de −5 est <strong>5</strong> : c'est le nombre d'unités qui séparent −5 de 0 sur la droite graduée. Une distance est toujours <strong>positive</strong>."},
+
+  {tag:"Comparaison", type:"qcm",
+   q:"Quel est le <strong>plus grand</strong> de ces nombres relatifs ?",
+   options:["−1","−3","−9","−12"], answer:0,
+   explain:"Entre deux nombres négatifs, le plus grand est celui qui a la <strong>plus petite distance à zéro</strong>. −1 est le plus proche de zéro : c'est le plus grand."},
+
+  {tag:"Comparaison", type:"compare", a:"−4", b:"−11", answer:1,
+   q:"Complète avec le bon symbole de comparaison.",
+   explain:"−4 est plus proche de zéro que −11, donc <strong>−4 &gt; −11</strong>. Attention : chez les nombres négatifs, « plus loin de zéro » signifie « plus petit » !"},
+
+  {tag:"Comparaison", type:"compare", a:"−6", b:"+2", answer:0,
+   q:"Complète avec le bon symbole de comparaison.",
+   explain:"Tout nombre <strong>négatif est inférieur</strong> à tout nombre <strong>positif</strong> : donc −6 &lt; +2."},
+
+  {tag:"Écriture", type:"compare", a:"+7", b:"7", answer:2,
+   q:"Complète avec le bon symbole de comparaison.",
+   explain:"+7 et 7 désignent <strong>exactement le même nombre</strong> : le signe « + » est facultatif devant un nombre positif. Donc +7 = 7."},
+
+  {tag:"Addition", type:"input",
+   q:"Calcule : <strong>(+6) + (−11) =</strong>",
+   answer:-5, unit:"",
+   explain:"Signes <strong>différents</strong> : on garde le signe du nombre qui a la plus grande distance à zéro (ici 11, donc signe −) et on calcule la différence 11 − 6 = 5. Résultat : <strong>−5</strong>."},
+
+  {tag:"Addition", type:"input",
+   q:"Calcule : <strong>(−7) + (−8) =</strong>",
+   answer:-15, unit:"",
+   explain:"Signes <strong>identiques</strong> (tous deux négatifs) : on garde le signe « − » et on additionne les distances à zéro : 7 + 8 = 15. Résultat : <strong>−15</strong>."},
+
+  {tag:"Soustraction", type:"input",
+   q:"Calcule : <strong>4 − 13 =</strong>",
+   answer:-9, unit:"",
+   explain:"Soustraire 13 revient à ajouter son opposé : 4 − 13 = 4 + (−13). Signes différents → signe de 13 (−), et 13 − 4 = 9. Résultat : <strong>−9</strong>."},
+
+  {tag:"Soustraction", type:"input",
+   q:"Calcule : <strong>(−5) − (−9) =</strong>",
+   answer:4, unit:"",
+   explain:"Soustraire un nombre, c'est <strong>ajouter son opposé</strong> : (−5) − (−9) = (−5) + (+9). Signes différents → signe de 9 (+), et 9 − 5 = 4. Résultat : <strong>+4</strong>."},
+
+  {tag:"Opposés", type:"input",
+   q:"Calcule : <strong>(+8) + (−8) =</strong>",
+   answer:0, unit:"",
+   explain:"(+8) et (−8) sont deux nombres <strong>opposés</strong> : leur somme est toujours égale à <strong>0</strong>."},
+
+  {tag:"Règle", type:"qcm",
+   q:"Pour additionner deux nombres relatifs de <strong>signes différents</strong>, quelle est la bonne méthode ?",
+   options:[
+     "On additionne les distances à zéro et on écrit le signe +",
+     "On garde le signe du nombre qui a la plus grande distance à zéro et on soustrait les distances à zéro",
+     "Le résultat est toujours un nombre négatif",
+     "Le résultat est toujours un nombre positif"
+   ], answer:1,
+   explain:"La bonne méthode : on prend le <strong>signe du nombre qui a la plus grande distance à zéro</strong>, puis on calcule la <strong>différence</strong> des distances à zéro. Exemple : (−9) + (+4) = −5."},
+
+  {tag:"Calcul en chaîne", type:"input",
+   q:"Calcule en allant de gauche à droite : <strong>(−3) + (+5) − (+8) =</strong>",
+   answer:-6, unit:"",
+   explain:"Étape 1 : (−3) + (+5) = +2. Étape 2 : 2 − 8 = −6. Résultat : <strong>−6</strong>."},
+
+  {tag:"Droite graduée", type:"qcm", visual:"line",
+   q:"Observe la droite graduée. Quelle est l'<strong>abscisse</strong> du point A ?",
+   options:["−5","−4","−3","+4"], answer:1,
+   explain:"Le point A est placé <strong>4 unités à gauche</strong> de l'origine O : son abscisse est donc <strong>−4</strong>."},
+
+  {tag:"Repérage dans le plan", type:"qcm", visual:"repere",
+   q:"Dans le repère ci-dessous, le point M a pour coordonnées (−2 ; 3). Dans quelle <strong>zone</strong> se trouve-t-il ?",
+   options:[
+     "En haut à gauche (abscisse négative, ordonnée positive)",
+     "En haut à droite (abscisse positive, ordonnée positive)",
+     "En bas à gauche (abscisse négative, ordonnée négative)",
+     "En bas à droite (abscisse positive, ordonnée négative)"
+   ], answer:0,
+   explain:"M(−2 ; 3) : l'abscisse −2 est négative → on part vers la <strong>gauche</strong> ; l'ordonnée 3 est positive → on monte. Le point est donc <strong>en haut à gauche</strong> de l'origine."},
+
+  {tag:"Problème", type:"qcm",
+   q:"À 6 h du matin, la température est de <strong>−4 °C</strong>. Ensuite elle <strong>baisse de 6 °C</strong>. Quelle est la nouvelle température ?",
+   options:["−10 °C","−2 °C","+2 °C","+10 °C"], answer:0,
+   explain:"Baisser de 6 °C revient à ajouter −6 : (−4) + (−6) = −10. Il fait donc <strong>−10 °C</strong>."},
+
+  {tag:"Problème", type:"qcm",
+   q:"Un sous-marin se trouve à la profondeur <strong>−120 m</strong>. Il <strong>remonte de 50 m</strong>. À quelle profondeur se trouve-t-il maintenant ?",
+   options:["−170 m","−70 m","+70 m","−50 m"], answer:1,
+   explain:"Remonter de 50 m revient à ajouter +50 : (−120) + (+50) = −70 (signe de 120, différence 120 − 50 = 70). Il est donc à <strong>−70 m</strong>."},
+
+  {tag:"Rangement", type:"order",
+   q:"Clique sur les nombres <strong>du plus petit au plus grand</strong> (ordre croissant).",
+   values:["−6","3","−1","0","−9"],
+   answer:["−9","−6","−1","0","3"],
+   explain:"D'abord tous les négatifs, du plus loin de zéro au plus proche : −9 &lt; −6 &lt; −1. Puis 0, puis les positifs : 0 &lt; 3. Ordre croissant : <strong>−9 &lt; −6 &lt; −1 &lt; 0 &lt; 3</strong>."},
+
+  {tag:"Défi bonus", type:"qcm",
+   q:"Défi (on s'entraîne pour la 4ᵉ) : que vaut <strong>(−2) × (−6)</strong> ?",
+   options:["−12","+12","−8","+8"], answer:1,
+   explain:"Le produit de deux nombres de <strong>même signe</strong> est <strong>positif</strong> : 2 × 6 = 12, donc (−2) × (−6) = <strong>+12</strong>."}
+];
+
+/* ---------- 2. ÉTAT ---------- */
+const TOTAL = QUESTIONS.length;
+let state = {current:0, score:0, answers:[], streak:0, bestStreak:0, started:null, finished:false};
+let tmp = {qcm:null, cmp:null, order:[], input:""};
+
+const $ = id => document.getElementById(id);
+const SYM = ["&lt;", "&gt;", "="];
+
+/* ---------- 3. VISUELS SVG ---------- */
+function svgLine(){
+  const min=-6, max=6, w=620, h=104, pad=40, step=(w-2*pad)/(max-min);
+  let g = "";
+  for(let v=min; v<=max; v++){
+    const x = pad + (v-min)*step;
+    g += `<line x1="${x}" y1="${h/2-11}" x2="${x}" y2="${h/2+11}" stroke="#475569" stroke-width="${v===0?3:1.6}" opacity="${v===0?1:.65}"/>`;
+    g += `<text x="${x}" y="${h/2+34}" text-anchor="middle" font-size="15" font-family="Baloo 2, sans-serif" font-weight="700" fill="#0f172a">${v}</text>`;
+  }
+  const ax = pad + (-4-min)*step;
+  g += `<circle cx="${ax}" cy="${h/2-30}" r="6" fill="#e11d48"/><line x1="${ax}" y1="${h/2-24}" x2="${ax}" y2="${h/2}" stroke="#e11d48" stroke-width="2" stroke-dasharray="3 3"/>`;
+  g += `<text x="${ax}" y="${h/2-40}" text-anchor="middle" font-size="18" font-family="Baloo 2, sans-serif" font-weight="800" fill="#be123c">A</text>`;
+  g += `<text x="${w-16}" y="${h/2+6}" font-size="16" fill="#475569">→</text><text x="${pad-26}" y="${h/2+6}" font-size="16" fill="#475569">←</text>`;
+  return `<svg viewBox="0 0 ${w} ${h}" class="w-full h-auto max-w-xl mx-auto" role="img" aria-label="Droite graduée de −6 à 6 avec le point A">
+    <line x1="${pad-14}" y1="${h/2}" x2="${w-pad+18}" y2="${h/2}" stroke="#0f172a" stroke-width="2.5"/>${g}
+    <text x="${w-pad+30}" y="${h/2-14}" font-size="11" fill="#64748b">x</text></svg>`;
+}
+
+function svgRepere(){
+  const w=340, h=340, pad=36, u=(w-2*pad)/8; // 8 unités (−4..4)
+  const cx = w/2, cy = h/2;
+  let g = "";
+  for(let i=-4;i<=4;i++){
+    const x = cx + i*u, y = cy - i*u;
+    g += `<line x1="${x}" y1="${pad-6}" x2="${x}" y2="${h-pad+6}" stroke="#cbd5e1" stroke-width="1"/>`;
+    g += `<line x1="${pad-6}" y1="${y}" x2="${w-pad+6}" y2="${y}" stroke="#cbd5e1" stroke-width="1"/>`;
+    if(i!==0){
+      g += `<text x="${x}" y="${cy+18}" text-anchor="middle" font-size="12" fill="#64748b">${i}</text>`;
+      g += `<text x="${cx-14}" y="${y+5}" text-anchor="end" font-size="12" fill="#64748b">${i}</text>`;
+    }
+  }
+  const mx = cx + (-2)*u, my = cy - 3*u;
+  g += `<line x1="${pad-6}" y1="${cy}" x2="${w-pad+6}" y2="${cy}" stroke="#0f172a" stroke-width="2.5"/>`;
+  g += `<line x1="${cx}" y1="${h-pad+6}" x2="${cx}" y2="${pad-6}" stroke="#0f172a" stroke-width="2.5"/>`;
+  g += `<line x1="${mx}" y1="${my}" x2="${mx}" y2="${cy}" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+  g += `<line x1="${mx}" y1="${my}" x2="${cx}" y2="${my}" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+  g += `<circle cx="${mx}" cy="${my}" r="7" fill="#e11d48"/>`;
+  g += `<text x="${mx+12}" y="${my-10}" font-size="18" font-family="Baloo 2, sans-serif" font-weight="800" fill="#be123c">M</text>`;
+  g += `<text x="${w-pad+16}" y="${cy-8}" font-size="13" fill="#475569">x</text><text x="${cx+10}" y="${pad-14}" font-size="13" fill="#475569">y</text>`;
+  g += `<text x="${cx+8}" y="${cy+20}" font-size="13" font-family="Baloo 2" fill="#475569">O</text>`;
+  return `<svg viewBox="0 0 ${w} ${h}" class="w-full h-auto max-w-[320px] mx-auto rounded-2xl bg-slate-50 border border-slate-200 p-2" role="img" aria-label="Repère avec le point M(−2 ; 3)">${g}</svg>`;
+}
+
+/* ---------- 4. NAVIGATION ---------- */
+function show(screen){
+  ["screen-intro","screen-quiz","screen-result"].forEach(s => $(s).classList.toggle("hidden", s!==screen));
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function start(){
+  state = {current:0, score:0, answers:[], streak:0, bestStreak:0, started:Date.now(), finished:false};
+  buildDots();
+  show("screen-quiz");
+  render();
+}
+
+function buildDots(){
+  const d = $("dots"); d.innerHTML = "";
+  QUESTIONS.forEach((q,i)=>{
+    const s = document.createElement("span");
+    s.className = "w-6 h-1.5 rounded-full bg-slate-200 transition-all";
+    s.dataset.i = i; d.appendChild(s);
+  });
+}
+function updateDots(){
+  [...$("dots").children].forEach((el,i)=>{
+    const r = state.answers[i];
+    el.className = "w-6 h-1.5 rounded-full transition-all " +
+      (r ? (r.correct ? "bg-emerald-500" : "bg-rose-500") : (i===state.current ? "bg-indigo-600 w-9" : "bg-slate-200"));
+  });
+}
+
+/* ---------- 5. RENDU D'UNE QUESTION ---------- */
+function render(){
+  const q = QUESTIONS[state.current];
+  tmp = {qcm:null, cmp:null, order:[], input:""};
+  $("tag-chip").textContent = q.tag;
+  $("q-current").textContent = state.current+1;
+  $("score-live").textContent = state.score;
+  updateDots();
+  $("progress-bar").style.width = (state.current/TOTAL*100).toFixed(1)+"%";
+
+  const card = $("q-card");
+  card.classList.remove("fade-in"); void card.offsetWidth; card.classList.add("fade-in");
+
+  let body = "";
+  if(q.visual==="line") body += `<div class="rounded-2xl bg-slate-50 border border-slate-200 p-3 mb-6">${svgLine()}</div>`;
+  if(q.visual==="repere") body += `<div class="rounded-2xl bg-white border border-slate-200 p-3 mb-6">${svgRepere()}</div>`;
+
+  if(q.type==="qcm"){
+    body += `<div class="grid sm:grid-cols-2 gap-3">` + q.options.map((o,i)=>`
+      <button data-i="${i}" class="opt chip text-left px-5 py-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-indigo-400 hover:bg-indigo-50/50 font-semibold text-slate-800 flex items-center gap-3">
+        <span class="w-7 h-7 shrink-0 rounded-lg bg-slate-100 text-slate-500 flex items-center justify-center text-sm font-bold">${"ABCD"[i]}</span>
+        <span class="num">${o}</span>
+      </button>`).join("") + `</div>`;
+  }
+  else if(q.type==="input"){
+    body += `
+      <div class="flex items-center gap-3">
+        <input id="inp" type="text" inputmode="text" autocomplete="off" placeholder="Ta réponse (ex : −5)"
+          class="flex-1 px-5 py-4 rounded-2xl border-2 border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none text-2xl font-bold text-slate-900 num">
+        ${q.unit ? `<span class="text-lg font-semibold text-slate-500">${q.unit}</span>` : ""}
+      </div>
+      <p class="text-xs text-slate-500 mt-2">Tu peux écrire 5, +5 ou (+5) : la réponse est acceptée.</p>`;
+  }
+  else if(q.type==="compare"){
+    body += `
+      <div class="flex items-center justify-center gap-4 sm:gap-8 my-4">
+        <span class="num display text-4xl sm:text-5xl font-extrabold text-slate-900 px-5 py-3 rounded-2xl bg-slate-100">${q.a}</span>
+        <span id="cmp-slot" class="display text-4xl sm:text-5xl font-extrabold w-16 h-16 flex items-center justify-center rounded-2xl border-2 border-dashed border-indigo-300 text-indigo-500">?</span>
+        <span class="num display text-4xl sm:text-5xl font-extrabold text-slate-900 px-5 py-3 rounded-2xl bg-slate-100">${q.b}</span>
+      </div>
+      <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
+        ${["&lt;","&gt;","="].map((s,i)=>`<button data-i="${i}" class="opt chip display text-3xl font-extrabold py-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-indigo-400 hover:bg-indigo-50/50 text-slate-800">${s}</button>`).join("")}
+      </div>`;
+  }
+  else if(q.type==="order"){
+    const pool = [...q.values];
+    body += `
+      <div class="mb-3">
+        <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold mb-2">1 · Choisis les nombres dans le bon ordre</p>
+        <div id="pool" class="flex flex-wrap gap-2">${pool.map((v,i)=>`<button data-v="${v}" class="ord chip num px-5 py-3 rounded-xl border-2 border-slate-200 bg-white hover:border-indigo-400 text-xl font-bold">${v}</button>`).join("")}</div>
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold mb-2">2 · Ton ordre croissant</p>
+        <div id="slots" class="flex flex-wrap gap-2 min-h-[64px] items-center rounded-2xl border-2 border-dashed border-slate-300 p-3 bg-slate-50"></div>
+      </div>
+      <button id="clear-order" class="mt-3 text-sm font-semibold text-indigo-600 hover:text-indigo-800">↺ Effacer et recommencer</button>`;
+  }
+
+  card.innerHTML = `
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white flex items-center justify-center display font-extrabold text-lg">${state.current+1}</div>
+      <h2 class="display text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug">${q.q}</h2>
+    </div>
+    ${body}
+    <div id="feedback" class="hidden mt-6"></div>
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      <button id="btn-validate" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold shadow-lg shadow-indigo-600/25 hover:-translate-y-0.5 transition-all">Valider ma réponse</button>
+      <span class="text-xs text-slate-400">Astuce : la touche <kbd class="px-1.5 py-0.5 bg-slate-100 rounded border border-slate-300">Entrée</kbd> valide aussi.</span>
+    </div>`;
+
+  bindQuestion(q);
+}
+
+function bindQuestion(q){
+  card = $("q-card");
+  $("btn-validate").addEventListener("click", validate);
+  if(q.type==="qcm" || q.type==="compare"){
+    card.querySelectorAll(".opt").forEach(b=>{
+      b.addEventListener("click", ()=>{
+        card.querySelectorAll(".opt").forEach(x=>x.classList.remove("selected","border-indigo-500","bg-indigo-50"));
+        b.classList.add("selected","border-indigo-500","bg-indigo-50");
+        tmp.qcm = +b.dataset.i;
+        if(q.type==="compare"){
+          const slot = $("cmp-slot");
+          slot.textContent = b.textContent;
+          slot.classList.remove("border-dashed","text-indigo-500");
+          slot.classList.add("border-solid","bg-indigo-600","text-white");
+        }
+      });
+    });
+  }
+  if(q.type==="input"){
+    const inp = $("inp");
+    inp.addEventListener("input", e=>{ tmp.input = e.target.value; });
+    inp.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.stopPropagation(); validate(); } });
+    setTimeout(()=>inp.focus(), 120);
+  }
+  if(q.type==="order"){
+    const refresh = ()=>{
+      $("slots").innerHTML = tmp.order.length
+        ? tmp.order.map((v,i)=>`<span class="num inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 text-white text-xl font-bold pop"><span class="text-[10px] opacity-70">${i+1}</span>${v}</span>`).join("")
+        : `<span class="text-sm text-slate-400">Ta suite apparaîtra ici…</span>`;
+      card.querySelectorAll(".ord").forEach(b=> b.style.display = tmp.order.includes(b.dataset.v) ? "none" : "");
+      if(tmp.order.length === q.values.length) validate();
+    };
+    card.querySelectorAll(".ord").forEach(b=> b.addEventListener("click", ()=>{ tmp.order.push(b.dataset.v); refresh(); }));
+    $("clear-order").addEventListener("click", ()=>{ tmp.order = []; refresh(); });
+    refresh();
+  }
+}
+let card;
+
+/* ---------- 6. VALIDATION ---------- */
+function parseNum(s){
+  if(s===null || s===undefined) return null;
+  let t = String(s).trim().replace(/\s/g,"").replace(/−/g,"-").replace(/–/g,"-").replace(/,/g,".").replace(/[()]/g,"");
+  if(!t) return null;
+  if(t.startsWith("+")) t = t.slice(1);
+  if(t==="" || t==="+" || t==="-" || t===".") return null;
+  const n = Number(t);
+  return Number.isFinite(n) ? n : null;
+}
+
+function validate(){
+  const q = QUESTIONS[state.current];
+  let given = null, correct = false, givenTxt = "", okTxt = "";
+
+  if(q.type==="qcm"){
+    if(tmp.qcm===null) return toast("Choisis une réponse avant de valider !");
+    correct = tmp.qcm===q.answer;
+    givenTxt = q.options[tmp.qcm];
+    okTxt = q.options[q.answer];
+    card.querySelectorAll(".opt").forEach((b,i)=>{
+      b.disabled = true;
+      b.classList.remove("selected");
+      if(i===q.answer){ b.classList.add("border-emerald-500","bg-emerald-50","ring-2","ring-emerald-300"); }
+      else if(i===tmp.qcm){ b.classList.add("border-rose-400","bg-rose-50"); }
+    });
+  }
+  else if(q.type==="compare"){
+    if(tmp.qcm===null) return toast("Choisis un symbole : &lt;, &gt; ou =");
+    correct = tmp.qcm===q.answer;
+    givenTxt = `${q.a} ${SYM[tmp.qcm]} ${q.b}`;
+    okTxt = `${q.a} ${SYM[q.answer]} ${q.b}`;
+    card.querySelectorAll(".opt").forEach((b,i)=>{
+      b.disabled = true; b.classList.remove("selected");
+      if(i===q.answer){ b.classList.add("border-emerald-500","bg-emerald-50","ring-2","ring-emerald-300"); }
+      else if(i===tmp.qcm){ b.classList.add("border-rose-400","bg-rose-50"); }
+    });
+  }
+  else if(q.type==="input"){
+    const n = parseNum(tmp.input);
+    if(n===null) return toast("Écris un nombre (par exemple −5).");
+    correct = Math.abs(n - q.answer) < 1e-9;
+    givenTxt = String(tmp.input);
+    okTxt = String(q.answer);
+    const inp = $("inp"); inp.disabled = true;
+    if(correct){ inp.classList.add("border-emerald-500","bg-emerald-50"); }
+    else { inp.classList.add("border-rose-400","bg-rose-50"); }
+  }
+  else if(q.type==="order"){
+    if(tmp.order.length < q.values.length) return toast("Place tous les nombres dans le bon ordre !");
+    correct = tmp.order.join("|")===q.answer.join("|");
+    givenTxt = tmp.order.join("  ;  ");
+    okTxt = q.answer.join("  ;  ");
+    card.querySelectorAll(".ord").forEach(b=> b.disabled=true);
+    const slot = $("slots");
+    slot.className = "flex flex-wrap gap-2 items-center rounded-2xl border-2 p-3 " + (correct ? "border-emerald-400 bg-emerald-50" : "border-rose-300 bg-rose-50");
+    $("clear-order").classList.add("hidden");
+  }
+
+  if(correct){ state.score++; state.streak++; state.bestStreak = Math.max(state.bestStreak, state.streak); }
+  else { state.streak = 0; }
+  state.answers.push({q, correct, givenTxt, okTxt});
+  $("score-live").textContent = state.score;
+  if(state.streak>=3){ $("streak-box").classList.remove("hidden"); $("streak-box").textContent = "🔥 " + state.streak + " bonnes réponses d'affilée !"; }
+  else $("streak-box").classList.add("hidden");
+
+  $("btn-validate").disabled = true;
+  $("btn-validate").classList.add("opacity-40","cursor-not-allowed");
+
+  const fb = $("feedback");
+  fb.classList.remove("hidden");
+  fb.innerHTML = `
+    <div class="rounded-2xl p-5 pop ${correct ? "bg-emerald-50 border-2 border-emerald-300" : "bg-rose-50 border-2 border-rose-300"}">
+      <div class="flex items-center gap-2 font-extrabold display text-lg ${correct ? "text-emerald-800" : "text-rose-800"}">
+        <span class="text-2xl">${correct ? "✅" : "❌"}</span>
+        <span>${correct ? "Bien joué ! C'est exact." : "Pas tout à fait…"}</span>
+      </div>
+      ${correct ? "" : `<p class="mt-2 text-slate-700"><strong>Ta réponse :</strong> <span class="num">${givenTxt}</span> &nbsp;·&nbsp; <strong>Bonne réponse :</strong> <span class="num text-emerald-700">${okTxt}</span></p>`}
+      <div class="mt-3 pt-3 border-t ${correct ? "border-emerald-200" : "border-rose-200"}">
+        <p class="text-xs uppercase tracking-wider font-bold ${correct ? "text-emerald-700" : "text-rose-700"} mb-1">Explication</p>
+        <p class="text-slate-700 leading-relaxed">${q.explain}</p>
+      </div>
+      <button id="btn-next" class="mt-4 px-6 py-3 rounded-2xl ${state.current===TOTAL-1 ? "bg-slate-900 hover:bg-slate-800" : "bg-gradient-to-r from-indigo-600 to-violet-600 hover:-translate-y-0.5"} text-white font-bold shadow-lg transition-all">
+        ${state.current===TOTAL-1 ? "🏁 Voir mon résultat" : "Question suivante →"}
+      </button>
+    </div>`;
+  fb.querySelector("#btn-next").addEventListener("click", next);
+  if(!correct) card.classList.add("shake"), setTimeout(()=>card.classList.remove("shake"),450);
+  fb.scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+function next(){
+  if(state.current===TOTAL-1){ finish(); return; }
+  state.current++;
+  render();
+}
+
+/* ---------- 7. RÉSULTAT ---------- */
+function finish(){
+  state.finished = true;
+  $("progress-bar").style.width = "100%";
+  updateDots();
+  const s = state.score, pct = Math.round(s/TOTAL*100);
+  const secs = Math.max(1, Math.round((Date.now()-state.started)/1000));
+  let msg, emoji;
+  if(s===20){ emoji="🏆"; msg="Parfait ! Tu maîtrises complètement les nombres relatifs."; }
+  else if(s>=18){ emoji="🌟"; msg="Excellent travail ! Encore un petit détail et c'est parfait."; }
+  else if(s>=16){ emoji="👏"; msg="Très bien ! Les bases sont solides."; }
+  else if(s>=12){ emoji="💪"; msg="Bien ! Revois les règles de signe et la comparaison."; }
+  else if(s>=8){ emoji="📖"; msg="Il faut revoir la leçon sur les distances à zéro et les signes."; }
+  else { emoji="🔁"; msg="Reprends la leçon avec ton professeur puis retente l'exercice !"; }
+
+  const wrong = state.answers.filter(a=>!a.correct);
+
+  $("screen-result").innerHTML = `
+    <div class="bg-white rounded-3xl shadow-xl ring-1 ring-slate-900/5 overflow-hidden fade-in">
+      <div class="bg-gradient-to-br ${s>=16?"from-emerald-600 via-teal-600 to-emerald-700":"from-indigo-700 via-violet-700 to-fuchsia-700"} text-white p-8 sm:p-10 text-center">
+        <div class="text-6xl mb-2">${emoji}</div>
+        <h2 class="display text-3xl font-extrabold">Ton score : <span class="num">${s}</span> / ${TOTAL}</h2>
+        <p class="text-white/90 mt-1 text-lg">${msg}</p>
+        <div class="mt-5 grid grid-cols-3 gap-3 max-w-md mx-auto text-sm">
+          <div class="rounded-xl bg-white/15 border border-white/25 py-3"><p class="display text-2xl font-extrabold num">${pct}%</p><p class="text-white/80 text-xs">réussite</p></div>
+          <div class="rounded-xl bg-white/15 border border-white/25 py-3"><p class="display text-2xl font-extrabold num">${state.bestStreak}</p><p class="text-white/80 text-xs">meilleure série</p></div>
+          <div class="rounded-xl bg-white/15 border border-white/25 py-3"><p class="display text-2xl font-extrabold num">${Math.floor(secs/60)}m${String(secs%60).padStart(2,"0")}</p><p class="text-white/80 text-xs">durée</p></div>
+        </div>
+      </div>
+      <div class="p-6 sm:p-9">
+        <div class="flex flex-wrap gap-3 mb-7">
+          <button id="btn-restart" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold shadow-lg hover:-translate-y-0.5 transition-all">↻ Refaire l'exercice</button>
+          <button id="btn-download-result" class="px-5 py-3 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition">⬇ Télécharger l'exercice (.html)</button>
+          <button id="btn-fiche-result" class="px-5 py-3 rounded-2xl bg-white border border-slate-300 text-slate-700 font-semibold hover:border-slate-400 transition">🖨 Fiche + corrigé (.html)</button>
+          <button id="btn-print" class="px-5 py-3 rounded-2xl bg-white border border-slate-300 text-slate-700 font-semibold hover:border-slate-400 transition">🖨 Imprimer maintenant</button>
+        </div>
+
+        <h3 class="display text-xl font-extrabold text-slate-900 mb-3">Correction détaillée</h3>
+        <div class="space-y-3 max-h-[520px] overflow-auto scroll-thin pr-1">
+          ${state.answers.map((a,i)=>`
+            <div class="rounded-2xl border ${a.correct?"border-emerald-200 bg-emerald-50/40":"border-rose-200 bg-rose-50/40"} p-4">
+              <p class="text-xs font-bold ${a.correct?"text-emerald-700":"text-rose-700"}">Question ${i+1} · ${a.q.tag} ${a.correct?"— ✅ juste":"— ❌ faux"}</p>
+              <p class="font-semibold text-slate-800 mt-1">${a.q.q}</p>
+              ${a.correct?"":`<p class="text-sm mt-1"><span class="text-slate-500">Ta réponse :</span> <span class="num line-through">${a.givenTxt}</span> &nbsp;→&nbsp; <span class="text-emerald-700 font-bold num">${a.okTxt}</span></p>`}
+              <p class="text-sm text-slate-600 mt-2 leading-relaxed">${a.q.explain}</p>
+            </div>`).join("")}
+        </div>
+        ${wrong.length? `<p class="mt-4 text-sm text-slate-500">À revoir en priorité : ${wrong.length} question(s) — ${wrong.map(w=>state.answers.indexOf(w)+1).join(", ")}.</p>` : `<p class="mt-4 text-sm text-emerald-700 font-semibold">Aucune erreur : sans faute ! 🎉</p>`}
+        <p class="mt-6 text-xs text-slate-500 border-t pt-4">Exercice conçu et réalisé par <strong>Sid KHALIFA</strong> — Nombres relatifs, classe de 5ᵉ.</p>
+      </div>
+    </div>`;
+  show("screen-result");
+  if(s>=16) confetti();
+  $("btn-restart").onclick = start;
+  $("btn-download-result").onclick = ()=>downloadSource();
+  $("btn-fiche-result").onclick = ()=>downloadFiche();
+  $("btn-print").onclick = ()=>{ buildPrintSheet(); window.print(); };
+}
+
+/* ---------- 8. OUTILS ---------- */
+function toast(msg){
+  let t = $("toast");
+  if(!t){
+    t = document.createElement("div"); t.id="toast";
+    t.className="fixed left-1/2 -translate-x-1/2 bottom-6 z-[90] px-5 py-3 rounded-2xl bg-slate-900 text-white text-sm font-semibold shadow-2xl pop";
+    document.body.appendChild(t);
+  }
+  t.innerHTML = msg; t.classList.remove("hidden");
+  clearTimeout(t._t); t._t = setTimeout(()=>t.classList.add("hidden"), 2600);
+}
+
+function download(name, content){
+  const blob = new Blob([content], {type:"text/html;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 3000);
+  toast("✅ Fichier <strong>"+name+"</strong> téléchargé !");
+}
+
+function downloadSource(){
+  download("nombres-relatifs-5eme-Sid-KHALIFA.html", PAGE_SOURCE);
+}
+
+/* Fiche imprimable + corrigé : document HTML autonome */
+function ficheHTML(){
+  const rows = QUESTIONS.map((q,i)=>{
+    let rep;
+    if(q.type==="qcm") rep = q.options[q.answer];
+    else if(q.type==="compare") rep = `${q.a} ${SYM[q.answer]} ${q.b}`;
+    else if(q.type==="input") rep = String(q.answer);
+    else rep = q.answer.join(" &lt; ");
+    return `<tr><td>${i+1}</td><td>${q.q.replace(/<\/?strong>/g,"")}${q.visual?"<br><em>(figure de la version interactive)</em>":""}</td><td><strong>${rep}</strong></td></tr>`;
+  }).join("");
+  const results = state.finished ? `<h2>Résultats de l'élève</h2><p>Score : <strong>${state.score} / ${TOTAL}</strong> (${Math.round(state.score/TOTAL*100)} %) — meilleure série : ${state.bestStreak}.</p>` : "";
+  return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiche — Nombres relatifs 5ᵉ · Sid KHALIFA</title>
+<meta name="author" content="Sid KHALIFA">
+<style>
+ body{font-family:Georgia,'Times New Roman',serif;max-width:820px;margin:0 auto;padding:24px;color:#111;line-height:1.5}
+ header{border-bottom:3px double #333;padding-bottom:10px;margin-bottom:18px}
+ h1{font-size:22px;margin:0 0 4px} h2{font-size:16px;margin:22px 0 8px;border-bottom:1px solid #999;padding-bottom:4px}
+ .meta{font-size:13px;color:#444} table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+ th,td{border:1px solid #999;padding:6px 8px;text-align:left;vertical-align:top}
+ th{background:#eee} td:first-child{text-align:center;width:34px}
+ .note{background:#f4f4f4;border-left:4px solid #555;padding:8px 12px;font-size:13px;margin:12px 0}
+ footer{margin-top:26px;border-top:1px solid #999;padding-top:8px;font-size:12px;color:#555}
+ @media print{ @page{margin:14mm} }
+</style></head><body>
+<header>
+ <h1>Nombres relatifs — comparaison, repérage et calculs</h1>
+ <p class="meta">Classe de <strong>cinquième</strong> · Fiche d'exercices (20 questions) — Exercice de <strong>Sid KHALIFA</strong></p>
+</header>
+<div class="note">Nom : ____________________________&nbsp;&nbsp;&nbsp;Prénom : ____________________&nbsp;&nbsp;&nbsp;Date : ____ / ____ / ________</div>
+<h2>Exercices</h2>
+<table><tr><th>N°</th><th>Énoncé</th><th>Réponse</th></tr>${rows}</table>
+<h2>Mémo</h2>
+<div class="note">Signes <strong>identiques</strong> : on garde le signe et on additionne les distances à zéro. Signes <strong>différents</strong> : on prend le signe de la plus grande distance à zéro et on soustrait les distances à zéro. Deux nombres <strong>opposés</strong> ont la même distance à zéro. Soustraire un nombre revient à <strong>ajouter son opposé</strong>.</div>
+${results}
+<footer>© Sid KHALIFA — Support pédagogique, usage en classe autorisé. Version interactive : nombres-relatifs-5eme-Sid-KHALIFA.html</footer>
+</body></html>`;
+}
+function downloadFiche(){ download("fiche-nombres-relatifs-5eme-Sid-KHALIFA.html", ficheHTML()); }
+
+/* Feuille d'impression (aperçu navigateur) */
+function buildPrintSheet(){
+  const body = state.answers.length ? state.answers.map((a,i)=>`
+    <div class="q"><p class="num"><strong>Q${i+1}.</strong> ${a.q.q.replace(/<\/?strong>/g,"")}</p>
+    <p class="ans ${a.correct?"ok":"ko"}">Réponse donnée : ${a.givenTxt} — ${a.correct?"JUSTE":"FAUX"} · attendu : ${a.okTxt}</p>
+    <p class="exp">${a.q.explain.replace(/<\/?strong>/g,"")}</p></div>`).join("")
+    : QUESTIONS.map((q,i)=>`<div class="q"><p><strong>Q${i+1}.</strong> ${q.q.replace(/<\/?strong>/g,"")}</p></div>`).join("");
+  $("printArea").innerHTML = `
+    <style>
+      #printArea{font-family:Georgia,serif;color:#000;max-width:820px;margin:0 auto;padding:10px}
+      #printArea h1{font-size:21px;margin:0 0 2px}
+      #printArea .meta{font-size:12px;margin-bottom:14px}
+      #printArea .q{border-bottom:1px solid #bbb;padding:8px 0;font-size:13px}
+      #printArea .ok{color:#046} #printArea .ko{color:#900;font-weight:bold}
+      #printArea .exp{color:#333;font-style:italic;margin-top:2px}
+      #printArea .foot{margin-top:16px;font-size:11px;border-top:1px solid #999;padding-top:6px}
+    </style>
+    <h1>Nombres relatifs — comparaison et calculs</h1>
+    <p class="meta">Classe de cinquième · Exercice de Sid KHALIFA ${state.finished? "· Score : "+state.score+" / "+TOTAL : ""}</p>
+    ${body}
+    <p class="foot">© Sid KHALIFA — Corrigé détaillé de l'exercice interactif sur les nombres relatifs (5ᵉ).</p>`;
+}
+window.addEventListener("beforeprint", buildPrintSheet);
+
+/* Confettis */
+function confetti(){
+  const colors=["#6366f1","#a855f7","#ec4899","#22c55e","#f59e0b","#06b6d4"];
+  for(let i=0;i<90;i++){
+    const d=document.createElement("div");
+    d.className="confetti";
+    d.style.left = Math.random()*100+"vw";
+    d.style.background = colors[i%colors.length];
+    d.style.animationDuration = (2.2+Math.random()*1.8)+"s";
+    d.style.animationDelay = (Math.random()*0.6)+"s";
+    d.style.opacity = 0.9;
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(), 4800);
+  }
+}
+
+/* ---------- 9. LANCEMENT ---------- */
+$("btn-start").addEventListener("click", start);
+$("btn-download-intro").addEventListener("click", downloadSource);
+$("btn-fiche-intro").addEventListener("click", downloadFiche);
+$("btn-download-footer").addEventListener("click", downloadSource);
+$("btn-restart-footer").addEventListener("click", start);
+document.addEventListener("keydown", e=>{
+  if(e.key!=="Enter") return;
+  const nextBtn = document.getElementById("btn-next");
+  if(nextBtn){ nextBtn.click(); return; }
+  const valBtn = document.getElementById("btn-validate");
+  if(valBtn && !valBtn.disabled && document.activeElement.id !== "inp") valBtn.click();
+});
+</script>
+</body>
+</html>
